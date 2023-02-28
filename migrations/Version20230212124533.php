@@ -20,8 +20,8 @@ final class Version20230212124533 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX id ON user');
-        $this->addSql('DROP INDEX id_2 ON user');
+    #    $this->addSql('DROP INDEX id ON user');
+     #   $this->addSql('DROP INDEX id_2 ON user');
         $this->addSql('ALTER TABLE user ADD surname VARCHAR(128) DEFAULT NULL, CHANGE roles roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\'');
     }
 

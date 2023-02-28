@@ -23,8 +23,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private array $roles = [];
-    #[ORM\Column]
-    private bool $cwiczebna = false;
+  #  #[ORM\Column]
+  #  private bool $cwiczebna = false;
 
     /**
      * @var string The hashed password
@@ -42,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
-    public function getcwiczebna(): ?bool   {
+  /*  public function getcwiczebna(): ?bool   {
         return $this->cwiczebna;
     }
 
@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->cwiczebna = $cwiczebna;
 
         return $this;
-    }
+    }*/
 
 
     public function getUsername(): ?string
