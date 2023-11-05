@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Magazyn;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -13,13 +14,27 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('username')
-           
+            ->add('Przypisane_Magazyny', EntityType::class,
+            ['label'=> 'Magazynows',
+            'class'=> Magazyn::class,
+        /* 'query_builder'=> function(EntityRepository $er){
+                $query=$er->createQueryBuilder('r');
+            
+                return $query;
+            },*/
+            'choice_label'=>'nazwaMagazynu',
+            'placeholder'=>'Zaznacz magazyny',
+            'multiple'=>true,
+            'expanded'=> true,
+            'by_reference' => false,
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

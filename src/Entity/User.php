@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -37,6 +39,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::BIGINT, unique: true)]
     private ?string $crkp = null;
+
+    #[ORM\ManyToMany(targetEntity: Magazyn::class, inversedBy: 'users')]
+    private Collection $Przypisane_Magazyny;
+
+    public function __construct()
+    {
+        $this->Przypisane_Magazyny = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,6 +149,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCrkp(string $crkp): self
     {
         $this->crkp = $crkp;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Magazyn>
+     */
+    public function getPrzypisaneMagazyny(): Collection
+    {
+        return $this->Przypisane_Magazyny;
+    }
+
+    public function addPrzypisaneMagazyny(Magazyn $przypisaneMagazyny): self
+    {
+        if (!$this->Przypisane_Magazyny->contains($przypisaneMagazyny)) {
+            $this->Przypisane_Magazyny->add($przypisaneMagazyny);
+        }
+
+        return $this;
+    }
+
+    public function removePrzypisaneMagazyny(Magazyn $przypisaneMagazyny): self
+    {
+        $this->Przypisane_Magazyny->removeElement($przypisaneMagazyny);
 
         return $this;
     }
