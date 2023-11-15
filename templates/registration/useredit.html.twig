@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+
+    {{ form_start(registrationForm) }}
+    {{ form_errors(registrationForm) }}
+        {{ form_row(registrationForm.CRKP, {
+            label: 'CRKP'
+        }) }}
+         {{form_row(registrationForm.username)}}
+        {{form_row(registrationForm.surname)}}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'password'
+        }) }}
+       {{form_row(registrationForm.roles)}}
+    {{form_row(registrationForm.Przypisane_Magazyny)}}
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

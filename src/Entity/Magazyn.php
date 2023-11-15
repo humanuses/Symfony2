@@ -21,9 +21,13 @@ class Magazyn
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'Przypisane_Magazyny')]
     private Collection $users;
 
+    #[ORM\OneToMany(mappedBy: 'magazyn', targetEntity: Zasoby::class)]
+    private Collection $zasobies;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->zasobies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,6 +69,36 @@ class Magazyn
     {
         if ($this->users->removeElement($user)) {
             $user->removePrzypisaneMagazyny($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Zasoby>
+     */
+    public function getZasobies(): Collection
+    {
+        return $this->zasobies;
+    }
+
+    public function addZasoby(Zasoby $zasoby): self
+    {
+        if (!$this->zasobies->contains($zasoby)) {
+            $this->zasobies->add($zasoby);
+            $zasoby->setMagazyn($this);
+        }
+
+        return $this;
+    }
+
+    public function removeZasoby(Zasoby $zasoby): self
+    {
+        if ($this->zasobies->removeElement($zasoby)) {
+            // set the owning side to null (unless already changed)
+            if ($zasoby->getMagazyn() === $this) {
+                $zasoby->setMagazyn(null);
+            }
         }
 
         return $this;

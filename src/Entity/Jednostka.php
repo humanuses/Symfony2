@@ -21,9 +21,13 @@ class Jednostka
     #[ORM\OneToMany(mappedBy: 'Jednostka_Rozliczenia', targetEntity: Artykul::class)]
     private Collection $artykuls;
 
+    #[ORM\OneToMany(mappedBy: 'Jednostka_Miary', targetEntity: Zasoby::class)]
+    private Collection $zasobies;
+
     public function __construct()
     {
         $this->artykuls = new ArrayCollection();
+        $this->zasobies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,6 +71,36 @@ class Jednostka
             // set the owning side to null (unless already changed)
             if ($artykul->getJednostkaRozliczenia() === $this) {
                 $artykul->setJednostkaRozliczenia(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Zasoby>
+     */
+    public function getZasobies(): Collection
+    {
+        return $this->zasobies;
+    }
+
+    public function addZasoby(Zasoby $zasoby): self
+    {
+        if (!$this->zasobies->contains($zasoby)) {
+            $this->zasobies->add($zasoby);
+            $zasoby->setJednostkaMiary($this);
+        }
+
+        return $this;
+    }
+
+    public function removeZasoby(Zasoby $zasoby): self
+    {
+        if ($this->zasobies->removeElement($zasoby)) {
+            // set the owning side to null (unless already changed)
+            if ($zasoby->getJednostkaMiary() === $this) {
+                $zasoby->setJednostkaMiary(null);
             }
         }
 
