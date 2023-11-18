@@ -40,7 +40,7 @@ class Artykul
         return $this->Nazwa_artykulu;
     }
 
-    public function setNawzaArtykulu(string $Nazwa_artykulu): self
+    public function setNazwaArtykulu(string $Nazwa_artykulu): self
     {
         $this->Nazwa_artykulu = $Nazwa_artykulu;
 
