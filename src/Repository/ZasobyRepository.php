@@ -42,17 +42,20 @@ class ZasobyRepository extends ServiceEntityRepository
 //    /**
 //     * @return Zasoby[] Returns an array of Zasoby objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('z')
-//            ->andWhere('z.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('z.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   public function findByExampleField($value,$v): array
+   {
+       return $this->createQueryBuilder('z')
+           ->Where('z.magazyn = :val')
+           ->setParameter('val', $value)
+           ->andWhere('z.Nazwa_Artykulu = :val2')
+           ->setParameter('val2', $v)
+           
+           ->orderBy('z.id', 'ASC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Zasoby
 //    {

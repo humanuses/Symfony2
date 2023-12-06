@@ -7,11 +7,34 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-
+    <h1>ARTYKUŁ</h1>
+    <h2> (dodaj lub edytuj)</h2>
+ <form action="{{ path('app_artykul') }}">
+        
+            <input
+                type="search"
+                name="searchvalue"
+                class="form-control"
+                placeholder="nazwa artykułu"
+                aria-label="Search"
+            ><button > ZNAJDŹ</button>
+        </form>
+        {% if ArtykulForm is defined %}
 {{ form_start(ArtykulForm) }}
 {{ form_errors(ArtykulForm) }}
-{# {{ form_row(ArtykulForm.nazwa_artykulu) }} #}
-{{ form_row(ArtykulForm.Jednostka_Rozliczenia) }}
-<button type="submit" class="btn">Dodaj artykuł</button>
+{{tryb }}
+ {% if tryb =="add"%}
+     {{ form_row(ArtykulForm.nazwa_artykulu) }}
+     {{ form_row(ArtykulForm.Jednostka_Rozliczenia) }}
+     <button type="submit" class="btn">Dodaj artykuł</button>
+         
+      {% endif %}
+        {% if tryb =="edit" %}
+
+{{ form_row(ArtykulForm.nazwa_artykulu) }}
+<button type="submit" class="btn">ZAPISZ ZMIANY</button>
+{% endif %}
+
 {{ form_end(ArtykulForm) }}
+{% endif %}
 {% endblock %}

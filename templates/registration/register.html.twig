@@ -3,11 +3,25 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
+    <h1>UŻYTKOWNIK</h1>
+    <h2> (dodaj lub edytuj)</h2>
+ <form action="{{ path('app_register') }}">
+        
+            <input
+                type="search"
+                name="searchvalue"
+                class="form-control"
+                placeholder="CRP użytkownika"
+                aria-label="Search"
+            ><button > ZNAJDŹ</button>
+        </form>
+        {% if registrationForm is defined %}
+            
+        
+        
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.CRKP, {
-            label: 'CRKP'
+        {# {{ form_row(registrationForm.CRKP, {
+            label: 'CRP'
         }) }}
          {{form_row(registrationForm.username)}}
         {{form_row(registrationForm.surname)}}
@@ -15,7 +29,8 @@
             label: 'password'
         }) }}
        {{form_row(registrationForm.roles)}}
-
-        <button type="submit" class="btn">Register</button>
+{{form_row(registrationForm.Przypisane_Magazyny)}} #}
+        <button type="submit" class="btn">ZAPISZ</button>
     {{ form_end(registrationForm) }}
+    {% endif %}
 {% endblock %}

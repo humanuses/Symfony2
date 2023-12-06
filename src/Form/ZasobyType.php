@@ -13,7 +13,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class ZasobyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    
+    {$tryb =$options['ses'];
+        
+        if ($tryb != "edit") {
+
+    
+    
         $builder
             ->add('ilosc')
             ->add('vat')
@@ -28,7 +34,9 @@ class ZasobyType extends AbstractType
           
            'placeholder'=>'Wybierz Artykuł',
            
-           ])
+        ]);
+    }
+        $builder
         ->add('Jednostka_Miary',EntityType::class,
         ['label'=> 'Jednoskta rozliczenia',
         'class'=> Jednostka::class,
@@ -54,6 +62,7 @@ class ZasobyType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Zasoby::class,
+            'ses'=>''
         ]);
     }
 }

@@ -18,56 +18,56 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    {$tryb =$options['tryb'];
+        
+        if ($tryb != 'edit') {
         $builder
-            ->add('username')
-            ->add('Przypisane_Magazyny', EntityType::class,
-            ['label'=> 'Magazynows',
-            'class'=> Magazyn::class,
-        /* 'query_builder'=> function(EntityRepository $er){
-                $query=$er->createQueryBuilder('r');
+        ->add('CRKP',null,['label'=> 'CRP',])
+        ->add('plainPassword', PasswordType::class, [
+            // instead of being set onto the object directly,
+            // this is read and encoded in the controller
+            'mapped' => false,
+            'attr' => ['autocomplete' => 'new-password'],
+            'label'=> 'Hasło',
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Please enter a password',
+                ]),
+                new Length([
+                    'min' => 6,
+                    'minMessage' => 'Your password should be at least {{ limit }} characters',
+                    // max length allowed by Symfony for security reasons
+                    'max' => 4096,
+                ]),
+            ],
+        ],);} else{
+            $builder
+        ->add('CRKP',null,['label'=> 'CRP','disabled' => true]);
+        }
+      
+        $builder
+            ->add('username',null,['label'=> 'Imie',])
             
-                return $query;
-            },*/
+
+            ->add('surname',null,['label'=> 'Nazwisko',])
+            ->add('Przypisane_Magazyny', EntityType::class,
+            ['label'=> 'Magazyn',
+            'class'=> Magazyn::class,
+
             'choice_label'=>'nazwaMagazynu',
             'placeholder'=>'Zaznacz magazyny',
             'multiple'=>true,
             'expanded'=> true,
             'by_reference' => false,
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
-            ->add('surname')
-            ->add('CRKP')
+           
             ->add('roles', ChoiceType::class, [
                 'choices'  => [
                     'USER' => 'ROLE_USER',
-                 'ADMIN' => 'ROLE_ADMIN',
-                    
-                    
-             ],
+                 'ADMIN' => 'ROLE_ADMIN',                  
+                              ],'label'=> 'Funkcja',
             ])
-           /* -> add('roles', CheckboxType::class,[
-                'label'    => 'ADMIN?',
-                'required' => false,
-                'data' => false,
-            ]
-            )*/
+
             ->get('roles')
             ->addModelTransformer(new CallbackTransformer(
                 function ($tagsAsArray) {
@@ -86,6 +86,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'tryb'=>'',
         ]);
     }
 }

@@ -12,7 +12,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class ArtykulType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    {$tryb =$options['tryb'];
+      //  dd($tryb);
+        if ($tryb == "add") {
         $builder
             ->add('nazwa_artykulu')
             ->add('Jednostka_Rozliczenia', EntityType::class,
@@ -23,14 +25,17 @@ class ArtykulType extends AbstractType
            
             'placeholder'=>'Wybierz Jednosktę',
             
-            ])
-        ;
+        ]);}
+            else{
+        $builder
+        ->add('nazwa_artykulu')        ;}
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Artykul::class,
+            'tryb'=>'',
         ]);
     }
 }
