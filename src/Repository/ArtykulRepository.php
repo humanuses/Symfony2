@@ -42,17 +42,19 @@ class ArtykulRepository extends ServiceEntityRepository
 //    /**
 //     * @return Artykul[] Returns an array of Artykul objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   public function findByExampleField($value): array
+   {
+       return $this->createQueryBuilder('a')
+            ->join('a.Jednostka_Rozliczenia','jr')
+           ->andWhere('a.id = :val')
+        //    ->select('jr.jednostkarozliczenia')
+           ->setParameter('val', $value)
+        //    ->orderBy('a.id', 'ASC')
+        //    ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Artykul
 //    {

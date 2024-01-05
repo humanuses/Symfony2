@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class MagazynType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    {$tryb =$options['tryb'];
         $builder
             ->add('Nazwa_Magazynu')
             ->add('users', EntityType::class,

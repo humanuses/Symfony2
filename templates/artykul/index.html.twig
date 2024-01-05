@@ -22,7 +22,7 @@
         {% if ArtykulForm is defined %}
 {{ form_start(ArtykulForm) }}
 {{ form_errors(ArtykulForm) }}
-{{tryb }}
+
  {% if tryb =="add"%}
      {{ form_row(ArtykulForm.nazwa_artykulu) }}
      {{ form_row(ArtykulForm.Jednostka_Rozliczenia) }}
@@ -30,7 +30,7 @@
          
       {% endif %}
         {% if tryb =="edit" %}
-
+  
 {{ form_row(ArtykulForm.nazwa_artykulu) }}
 <button type="submit" class="btn">ZAPISZ ZMIANY</button>
 {% endif %}

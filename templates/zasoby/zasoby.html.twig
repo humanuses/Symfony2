@@ -3,11 +3,75 @@
 {% block title %}Hello ZasobyController!{% endblock %}
 
 {% block body %}
-
+<style>
+table, th, td {
+  border: 1px solid black;
+   border-collapse: collapse;
+}
+td {
+  text-align: center;
+}
+</style>
 <center>
 
-{{ form_start(zasobyForm) }}
-  <button type="submit" class="btn">Przyjmij artykuł</button>
-{{ form_end(zasobyForm) }}</center>
+<table><tr>
+
+<form action="{{ path('app_zasoby') }}">
+        
+            <input
+                type="search"
+                name="searchvalue"
+                class="form-control"
+                placeholder="numer artykułu"
+                aria-label="Search"
+            ><button > ZNAJDŹ</button>
+        </form>
+
+<td><td>Nazwa<td>Jednostka<td>Magazyn<td>Ilość<td>VAT<td>Cena <br>jednostkowa<td><tr>
+ {% for a in tryb %}  
+    {% for mags in mag %}
+
+    {% if mags.id == a.magazyn.id %}
+    <td><a href="{{  path('app_zasoby_in',{'id' : a.id,}) }}">
+    <button  class="example-wrapper">PRZYJMIJ</button></a><BR>
+    <td>  <b>{{a.NazwaArtykulu.NazwaArtykulu}} </td> 
+    <td> {{a.JednostkaMiary.NazwaJednostki}} </td> 
+    <td> {{mags.NazwaMagazynu}} </td> 
+    <td>{{a.ilosc}} </td>
+    <td> {{a.vat}} % </td>
+    <td> {{a.cenajednostkowa }} zł </td>
+    <td>
+    {% if a.ilosc > 0 %}
+       <a href="{{  path('app_zasoby_out',{'id' : a.id,}) }}">
+ 
+   
+    <button  class="example-wrapper">WYDAJ</button></a>
+       {% endif %}
+    <BR>
+    </tr>
+    {% endif %}
+    {% endfor %}
+
+
+{% endfor %}
+  </table>
+  
+  {# {{ form_start(zasobyForm) }}
+  
+  
+  {{ form_errors(zasobyForm) }}
+
+{{ form_end(zasobyForm) }} #}
+{% if ses and artid is null %}
+<h1>NIE ZNALEZIONO ATRYKUŁU O TAKIM NUMERZE</h1>
+   <a href="{{  path('app_zasoby') }}"><button  class="example-wrapper">POWRÓT</button></a><BR>
+{% endif %}
+  {% if ses and artid  %}
+
+
+   <a href="{{  path('app_zasoby_new',{'searchvalue': ses}) }}"><button  class="example-wrapper">Przyjmij nowy artykuł lub z innymi parametrami</button></a><BR>
+ 
+   {% endif %}
+</center>
 
 {% endblock %}

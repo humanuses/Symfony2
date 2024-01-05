@@ -15,8 +15,9 @@ class JednostkaController extends AbstractController
     #[Route('admin/jednostka', name: 'app_jednostka')]
     public function index(Request $request,EntityManagerInterface $entityManager): Response
     {$sesion=$request->get('searchvalue');
-        
+        $tryb='';
         $u=$entityManager->getRepository(Jednostka::class)->findOneBY(['Nazwa_Jednostki' => $sesion]);
+        
         if($sesion){
             if($u==null){
         $jednostka=new Jednostka();
@@ -26,23 +27,28 @@ class JednostkaController extends AbstractController
 
         else
         {$jednostka=$u ;
-            $form = $this->createForm(JednostkaType::class, $jednostka,['tryb'=>'edit']);
+            $tryb='edit';
+            $form = $this->createForm(JednostkaType::class, $jednostka,['tryb'=>$tryb]);
         }
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // dd($u);
             if($u==null)
             {
             $entityManager->persist($jednostka);
             $entityManager->flush(); 
+            $this->addFlash('success', 'Jednostę dodano');
             }
             else {
                 $entityManager->flush();
+                $this->addFlash('success', 'Zmiany zapisano');
             }
-            return $this->redirectToRoute('app_jednostka');}//rediret after add to entity
+            return $this->redirectToRoute('app_admin_panel');}//rediret after add to entity
         return $this->render('jednostka/index.html.twig', [
             'controller_name' => 'JednostkaController',
+            'tryb'=> $tryb,
             'JednostkaForm'=> $form->createView()
         ]);}
       

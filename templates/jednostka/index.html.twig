@@ -25,7 +25,13 @@
         </form>
         {% if JednostkaForm is defined %}
 {{ form_start(JednostkaForm) }}
+{{form_row(JednostkaForm.Nazwa_Jednostki)}}
+{% if tryb == "edit" %}
+    <button type="submit" class="btn">Edytuj jednostkę</button>
+
+{% else %}
 <button type="submit" class="btn">Dodaj jednostkę</button>
+{% endif %}
 {{ form_end(JednostkaForm) }}
 {% endif %}
 {% endblock %}

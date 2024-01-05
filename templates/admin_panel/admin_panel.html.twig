@@ -17,11 +17,18 @@
         <li>Your template at <code><a href="{{ 'D:/symfony final/templates/admin_panel/index.html.twig'|file_link(0) }}">templates/admin_panel/index.html.twig</a></code></li>
     </ul>
 </div> #}
-<center>
+<center><h1>
+{% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
 <a href="{{  path('app_register') }}"><button  class="example-wrapper">UŻYKTOWNIK</button></a>
 <a href="{{  path('app_magazyn',{'edit' : 'edit',}) }}"><button class="example-wrapper">MAGAZYN</button></a><br>
 <a href="{{  path('app_artykul',{'edit' : 'edit',}) }}"><button class="example-wrapper">ARTYKUŁ</button></a><br>
 <a href="{{  path('app_jednostka',{'edit' : 'edit',}) }}"><button class="example-wrapper">JEDNOSTKA ROZLICZENIA</button></a><br>
-<a href="{{  path('app_search',{'tryb' : 'zasoby',}) }}"><button  class="example-wrapper">EXIT</button></a><BR>
+<a href="{{  path('app_adminzasoby',{'tryb' : 'zasoby',}) }}"><button  class="example-wrapper">PODGLĄD MAGAZYNÓW</button></a><BR>
+<a href="{{  path('app_zasoby',) }}"><button  class="example-wrapper">EXIT</button></a><BR>
+
 </center>
 {% endblock %}

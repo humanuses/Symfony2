@@ -20,16 +20,19 @@
         
         
     {{ form_start(registrationForm) }}
-        {# {{ form_row(registrationForm.CRKP, {
+        {{ form_row(registrationForm.CRKP, {
             label: 'CRP'
         }) }}
          {{form_row(registrationForm.username)}}
         {{form_row(registrationForm.surname)}}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'password'
-        }) }}
+        {% if tryb == "add" %}
+            {{ form_row(registrationForm.plainPassword, {
+           
+            }) }} 
+        {% endif %}
+
        {{form_row(registrationForm.roles)}}
-{{form_row(registrationForm.Przypisane_Magazyny)}} #}
+{{form_row(registrationForm.Przypisane_Magazyny)}}
         <button type="submit" class="btn">ZAPISZ</button>
     {{ form_end(registrationForm) }}
     {% endif %}

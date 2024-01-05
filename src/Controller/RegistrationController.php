@@ -17,19 +17,23 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {$sesion=$request->get('searchvalue');
         $u=$entityManager->getRepository(User::class)->findOneBY(['crkp' => $sesion]);
+        $tryb='';
        //$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
        if($sesion){
-        if($u==null){
+        if($u==null)
+            {
          $user = new User();
-         $form = $this->createForm(RegistrationFormType::class, $user,['tryb'=>'add']);
+         $tryb ='add';
+         $form = $this->createForm(RegistrationFormType::class, $user,['tryb'=>$tryb]);
          $form->get('CRKP')->setData($sesion);
-        } else
-        {$user=$u ;
-        $form = $this->createForm(RegistrationFormType::class, $user,['tryb'=>'edit']);}
+            } 
+        else
+            {$user=$u ;
+            $form = $this->createForm(RegistrationFormType::class, $user,['tryb'=>'edit']);}
         $form->handleRequest($request);
 
         if ($form->isSubmitted()&& $form->isValid()) {
-           // dd($u);
+            // dd($u);
             if($u==null)
                 {
                 $user->setPassword(
@@ -42,47 +46,45 @@ class RegistrationController extends AbstractController
                $user->setCrkp($form->get('CRKP')->getData());
                 $entityManager->persist($user);
                 $entityManager->flush();
+                $this->addFlash('success', 'Użytkownik dodany');
                 }
             else{
                     $entityManager->flush();
+                    $this->addFlash('success', 'Zmiany zapisano');
                 }
-           
-           
-            // encode the plain password
-         //   $u = $entityManager->getRepository(User::class)->findOneBy(['crkp' => $form->get('CRKP')->getData()]);
-       
-           
+                return $this->redirectToRoute('app_admin_panel');
 }
-          //  return $this->redirectToRoute('app_login');
+           
       
 
         return $this->render('registration/register.html.twig', [
            'registrationForm' => $form->createView(),
+           'tryb'=>$tryb,
         ]);}
         return $this->render('registration/register.html.twig'); 
         
     }
-    // #[Route('admin/useredit' ,name: 'app_useredit') ]
-    // public function index2(Request $request, EntityManagerInterface $entityManager):Response
-    // { $sesion=$request->get('user');
-    //     $user =  $entityManager->getRepository(User::class)->findOneBY(['crkp' => $sesion]);
-    //     $form = $this->createForm(RegistrationFormType::class, $user,['tryb'=>'edit']);
-    //     $form->handleRequest($request);
+    #[Route('admin/useredit' ,name: 'app_useredit') ]
+    public function index2(Request $request, EntityManagerInterface $entityManager):Response
+    { $sesion=$request->get('user');
+        $user =  $entityManager->getRepository(User::class)->findOneBY(['crkp' => $sesion]);
+        $form = $this->createForm(RegistrationFormType::class, $user,['tryb'=>'edit']);
+        $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
            
            
-    //       //  $entityManager->persist($user);
-    //         $entityManager->flush();
+          //  $entityManager->persist($user);
+            $entityManager->flush();
            
 
-    //         return $this->redirectToRoute('app_admin_panel');
-    //     }
+            return $this->redirectToRoute('app_admin_panel');
+        }
 
-    //     return $this->render('registration/useredit.html.twig',[
-    //         'u'=>$sesion,
-    //        'registrationForm' => $form->createView(),
+        return $this->render('registration/useredit.html.twig',[
+            'u'=>$sesion,
+           'registrationForm' => $form->createView(),
            
-    //     ]);
-    // }
+        ]);
+    }
 }

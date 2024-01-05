@@ -16,7 +16,7 @@ class ArtykulType extends AbstractType
       //  dd($tryb);
         if ($tryb == "add") {
         $builder
-            ->add('nazwa_artykulu')
+            ->add('nazwa_artykulu', null,['label'=> 'Nazwa artykułu',])
             ->add('Jednostka_Rozliczenia', EntityType::class,
             ['label'=> 'Jednoskta rozliczenia',
             'class'=> Jednostka::class,
@@ -28,7 +28,7 @@ class ArtykulType extends AbstractType
         ]);}
             else{
         $builder
-        ->add('nazwa_artykulu')        ;}
+        ->add('nazwa_artykulu', null,['label'=> 'Nazwa artykułu',])        ;}
     }
 
     public function configureOptions(OptionsResolver $resolver): void

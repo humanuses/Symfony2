@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ZasobyController!{% endblock %}
+
+{% block body %}
+<style>
+table, th, td {
+  border: 1px solid black;
+   border-collapse: collapse;
+}
+</style>
+<center>
+{% for message in app.flashes('error') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+{# 
+<table><tr>
+
+<form action="{{ path('app_zasoby') }}">
+        
+            <input
+                type="search"
+                name="searchvalue"
+                class="form-control"
+                placeholder="numer artykułu"
+                aria-label="Search"
+            ><button > ZNAJDŹ</button>
+        </form>
+
+<td>Nazwa<td>Jednostka<td>Magazyn<td>Ilość<td>ID<tr>
+ {% for a in tryb %}  
+    {% for mags in mag %}
+
+    {% if mags.id == a.magazyn.id %}
+ 
+    <td>  <b>{{a.NazwaArtykulu.NazwaArtykulu}} </td> 
+    <td> {{a.JednostkaMiary.NazwaJednostki}} </td> 
+    <td> {{mags.NazwaMagazynu}} </td> 
+    <td>{{a.ilosc}}</td><td>{{a.id}}
+    </tr>
+    {% endif %}
+    {% endfor %}
+
+
+{% endfor %} #}
+  </table>
+  
+  {{ form_start(zasobyForm) }}
+  <b>  {{zasob.NazwaArtykulu.NazwaArtykulu}}</b><br
+  {{ form_row(zasobyForm.ilosc) }}
+<b>  {{zasob.JednostkaMiary.NazwaJednostki}}</b><br>
+  {{ form_errors(zasobyForm) }}
+  <button type="submit" class="btn">WYDAJ</button>
+{{ form_end(zasobyForm) }}
+
+
+     <a href="{{  path('app_zasoby') }}">
+    <button  class="example-wrapper">POWRÓT</button></a>
+</center>
+  
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Zasoby IN Controller!{% endblock %}
+
+{% block body %}
+<style>
+table, th, td {
+  border: 1px solid black;
+   border-collapse: collapse;
+}
+</style>
+<center>
+
+  {{ form_start(zasobyForm) }}
+  {{ form_errors(zasobyForm) }}
+  {{ form_row(zasobyForm.numer_artykulu) }}
+  {{ form_row(zasobyForm.nazwa_artykulu) }}
+   ILOŚĆ{{ form_widget(zasobyForm.ilosc)  }}
+ 
+  {{artid.JednostkaRozliczenia.nazwajednostki}}<br>
+  {{ form_row(zasobyForm.vat) }}
+  {{ form_row(zasobyForm.Cena_Jednostkowa) }}
+   {{ form_row(zasobyForm.magazyn) }}
+  
+  {% if artid is not null %}
+    <button type="submit" class="btn">PRZYJMIJ</button>
+  {% endif %}
+{{ form_end(zasobyForm) }}
+     <a href="{{  path('app_zasoby') }}">
+    <button  class="example-wrapper">POWRÓT</button></a>
+
+</center>
+
+{% endblock %}

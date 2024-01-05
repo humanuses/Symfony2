@@ -59,17 +59,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   public function findByExampleField($value): array
+   {
+       return $this->createQueryBuilder('u')
+      // 
+           
+           -> join('u.Przypisane_Magazyny','na')
+          ->Where('na.id = :val')
+          ->setParameter('val', $value)
+        // ->addSelect('na.id')
+        //    ->orderBy('u.id', 'ASC')
+        //    ->setMaxResults(10)
+            
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?User
 //    {

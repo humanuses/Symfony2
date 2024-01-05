@@ -15,35 +15,40 @@ class ArtykulController extends AbstractController
     public function index(Request $request,EntityManagerInterface $entityManager): Response
     {$sesion=$request->get('searchvalue');
         
-        //$u=$entityManager->getRepository(Artykul::class)->findOneBY(['Nazwa_artykulu' => $sesion]);
-        $u=$entityManager->getRepository(Artykul::class)->findOneBySomeField($sesion);
+        $u=$entityManager->getRepository(Artykul::class)->findOneBY(['Nazwa_artykulu' => $sesion]);
         
-        if($sesion){
-            dd($u);
-            if($u==null){
-        $art=new Artykul();
-        $form=$this->createForm(ArtykulType::class,$art,['tryb'=>'add']);
-        $form->get('nazwa_artykulu')->setData($sesion);
-        $tryb="add";
-        }
+        if($sesion)
+        {
+            if($u==null)
+             {
+                $art=new Artykul();
+                $form=$this->createForm(ArtykulType::class,$art,['tryb'=>'add']);
+                $form->get('nazwa_artykulu')->setData($sesion);
+                $tryb="add";
+             }
 
-        else
-        {$art=$u ;
-            $form = $this->createForm(ArtykulType::class, $art,['tryb'=>'edit']);
-            $tryb="edit";
-        }
-        $form->handleRequest($request);
+                else
+                    {
+                    $art=$u ;
+                    $form = $this->createForm(ArtykulType::class, $art,['tryb'=>'edit']);
+                    $tryb="edit";
+                    }
+                 $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if($u==null)
             {
             $entityManager->persist($art);
             $entityManager->flush(); 
+            $f=$art->getid();
+      
+            $this->addFlash('success', 'Artykuł dodany. NUMER ARTYKUŁU : '.$f);
             }
             else {
                 $entityManager->flush();
+                $this->addFlash('success', 'Zmiany zapisano');
             }
-            return $this->redirectToRoute('app_zasoby');
+            return $this->redirectToRoute('app_admin_panel');
         }//rediret after add to entity
         return $this->render('artykul/index.html.twig', [
             'controller_name' => 'ArtykulController',

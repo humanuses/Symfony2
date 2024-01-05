@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Zasoby IN Controller!{% endblock %}
+
+{% block body %}
+<style>
+table, th, td {
+  border: 1px solid black;
+   border-collapse: collapse;
+}
+</style>
+<center>
+{# 
+<table><tr>
+
+<form action="{{ path('app_zasoby') }}">
+        
+            <input
+                type="search"
+                name="searchvalue"
+                class="form-control"
+                placeholder="numer artykułu"
+                aria-label="Search"
+            ><button > ZNAJDŹ</button>
+        </form>
+
+<td>Nazwa<td>Jednostka<td>Magazyn<td>Ilość<td>ID<tr>
+ {% for a in tryb %}  
+    {% for mags in mag %}
+
+    {% if mags.id == a.magazyn.id %}
+ 
+    <td>  <b>{{a.NazwaArtykulu.NazwaArtykulu}} </td> 
+    <td> {{a.JednostkaMiary.NazwaJednostki}} </td> 
+    <td> {{mags.NazwaMagazynu}} </td> 
+    <td>{{a.ilosc}}</td><td>{{a.id}}
+    </tr>
+    {% endif %}
+    {% endfor %}
+
+
+{% endfor %} #}
+  </table>
+  
+  {{ form_start(zasobyForm) }}
+  {{ form_row(zasobyForm.ilosc) }}
+  {{ form_errors(zasobyForm) }}
+  {# {% if ses is not null %} #}
+    <button type="submit" class="btn">PRZYJMIJ</button>
+  {# {% endif %} #}
+{{ form_end(zasobyForm) }}
+     <a href="{{  path('app_zasoby') }}">
+    <button  class="example-wrapper">POWRÓT</button></a>
+
+</center>
+
+{% endblock %}

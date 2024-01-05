@@ -16,15 +16,13 @@ class MagazynController extends AbstractController
     {$sesion=$request->get('searchvalue');
         
         $u=$entityManager->getRepository(Magazyn::class)->findOneBY(['Nazwa_Magazynu' => $sesion]);
+
+        // dd($u);
         if($sesion){
             if($u==null){
         $magazyn=new Magazyn();
-        $form=$this->createForm(MagazynType::class,$magazyn);
-        return $this->render('magazyn/index.html.twig', [
-            'controller_name' => 'MagazynController',
-            'tryb'=>'add',
-            'magazynform'=>$form->createView()
-        ]);
+        $form=$this->createForm(MagazynType::class,$magazyn,['tryb'=>'add']);
+        $form->get('Nazwa_Magazynu')->setData($sesion);
             }
             else
             {
@@ -36,15 +34,18 @@ class MagazynController extends AbstractController
             if($u==null)
             {
             $entityManager->persist($magazyn);
-            $entityManager->flush();}
+            $entityManager->flush();
+            $this->addFlash('success', 'Magazyn dodany');
+        }
             else{
                 $entityManager->flush();
+                $this->addFlash('success', 'Zmiany zapisano');
             }
-          //  return $this->redirectToRoute('app_zasoby');
+           return $this->redirectToRoute('app_admin_panel');
         }
         return $this->render('magazyn/index.html.twig', [
             'controller_name' => 'MagazynController',
-            'tryb'=>'edit',
+           'tryb'=>'edit',
             'magazynform'=>$form->createView()
         ]);}
         return $this->render('magazyn/index.html.twig');

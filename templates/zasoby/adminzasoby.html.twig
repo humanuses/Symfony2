@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Zasoby!{% endblock %}
+
+{% block body %}
+<style>
+table, th, td {
+  border: 1px solid black;
+   border-collapse: collapse;
+}
+td {
+  text-align: center;
+}
+</style>
+<center>
+<table><tr>
+
+<form action="{{ path('app_adminzasoby') }}">
+        
+            <input
+                type="search"
+                name="searchvalue"
+                class="form-control"
+                placeholder="numer artykułu"
+                aria-label="Search"
+            ><button > ZNAJDŹ</button>
+        </form>
+<td>Nazwa<td>Jednostka<td>Magazyn<td>Ilość<td>VAT<td>Cena <br>jednostkowa<td>Wartość<br> podatku<td>Wartość<br> brutto<tr>
+ {% for a in tryb %}  
+    {% for mags in mag %}
+
+     {% if mags.id == a.magazyn.id %}
+      <td>  <b>{{a.NazwaArtykulu.NazwaArtykulu}} </td> 
+    <td> {{a.JednostkaMiary.NazwaJednostki}} </td> 
+    <td> {{mags.NazwaMagazynu}} </td> 
+    <td>{{a.ilosc}} </td>
+    <td> {{a.vat}} % </td>
+    <td> {{a.cenajednostkowa }} zł </td>
+    <td>{{a.WartoscPodatku}} zł </td>
+    <td>{{a.WartoscBrutto}} zł </td>
+    </tr>
+   {% endif %}
+    {% endfor %}
+
+
+{% endfor %}
+  </table>
+      <a href="{{  path('app_admin_panel') }}">
+    <button  class="example-wrapper">POWRÓT</button></a>
+</center>
+
+{% endblock %}

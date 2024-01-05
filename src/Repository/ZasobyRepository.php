@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Zasoby;
+use App\Entity\Artykul;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -42,18 +43,24 @@ class ZasobyRepository extends ServiceEntityRepository
 //    /**
 //     * @return Zasoby[] Returns an array of Zasoby objects
 //     */
-   public function findByExampleField($value,$v): array
+   public function findByExampleField($value)
    {
        return $this->createQueryBuilder('z')
-           ->Where('z.magazyn = :val')
-           ->setParameter('val', $value)
-           ->andWhere('z.Nazwa_Artykulu = :val2')
-           ->setParameter('val2', $v)
-           
-           ->orderBy('z.id', 'ASC')
-           ->setMaxResults(10)
+       -> join('z.Nazwa_Artykulu','na')
+            ->Where('na.id = :val')
+     ->setParameter('val', $value)
+    //   ->andWhere('z.magazyn = :val')
+    //        ->setParameter('val', $value)
+        //    -> join('z.magazyn','ma')
+        //     ->Where('ma.id = :param')//magazyn id
+        //         ->setParameter('param',$value )
+         //  ->setParameter('val2',$v)
+            
+            // ->join('z.Jednostka_Miary','jm')
+        //    ->orderBy('z.id', 'ASC')
+        //    ->setMaxResults(10)
            ->getQuery()
-           ->getResult()
+          ->getResult()
        ;
    }
 

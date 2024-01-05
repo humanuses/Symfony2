@@ -6,8 +6,10 @@ use App\Repository\ArtykulRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ArtykulRepository::class)]
+#[UniqueEntity(fields: ['Nazwa_artykulu'], message: 'Już isnieje taki artykuł')]
 class Artykul
 {
     #[ORM\Id]

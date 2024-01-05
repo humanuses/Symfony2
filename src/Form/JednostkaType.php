@@ -12,7 +12,7 @@ class JednostkaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Nazwa_Jednostki')
+            ->add('Nazwa_Jednostki',null,["label"=> 'Nazwa jednostki'])
         ;
     }
 

@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\ZasobyRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ZasobyRepository::class)]
+#[UniqueEntity(fields: ['Nazwa_Artykulu','magazyn','vat','Cena_Jednostkowa'], message: 'Już isnieje taki artykuł na tym magazynnie')]
 class Zasoby
 {
     #[ORM\Id]
@@ -18,6 +21,7 @@ class Zasoby
     private ?Artykul $Nazwa_Artykulu = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero(message: 'Nie możesz wydać więcej niż posiadasz na magazynie')]
     private ?float $ilosc = null;
 
     #[ORM\ManyToOne(inversedBy: 'zasobies')]
