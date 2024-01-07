@@ -46,7 +46,7 @@ class MagazynRepository extends ServiceEntityRepository
    {
        return $this->createQueryBuilder('m')
        ->join('m.users','au')
-           ->Where('au.id = :val')
+           ->Where('au.crkp = :val')
            ->setParameter('val', $value)
         //    ->orderBy('m.id', 'ASC')
         //    ->setMaxResults(10)
